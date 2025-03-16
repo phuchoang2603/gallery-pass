@@ -1,17 +1,20 @@
 {
-    "title": "Our Photo Gallery",
-    "message": "Enjoy our beautiful memories together",
+    "mainTitle": "Photo Gallery",
+    "mainMessage": "Welcome to our photo gallery",
+    "desTitle": "Our Photo Gallery",
+    "desMessage": "Enjoy our beautiful memories together",
     "colors": {
         "primary": "#00337c",
         "primaryLight": "#4aaab6",
         "textDark": "#333",
         "textLight": "white",
-        "bgLight": "#f8f8f8"
+        "bgLight": "#4aaab6"
     },
     "imagesPath": "images/",
     "imageExtension": ".jpg",
     "defaultImageCount": 7  ,
     "heartColor": "#00337c",
     "passwordHint": "Enter the password to view the gallery",
-    "correctPassword": "2508"
+    "correctPassword": "2508",
+    "backgroundImage": "images/background.jpg"
 }

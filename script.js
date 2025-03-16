@@ -11,8 +11,10 @@ async function loadConfig() {
         console.error('Error loading configuration:', error);
         // Return default config as fallback
         return {
-            title: "Photo Gallery",
-            message: "Welcome to our gallery",
+            mainTitle: "Our Photo Gallery",
+            mainMessage: "Enjoy our beautiful memories together",
+            desTitle: "Our Photo Gallery",
+            desMessage: "Enjoy our beautiful memories together",
             colors: {
                 primary: "#FF1493",
                 primaryLight: "#FF69B4",
@@ -35,13 +37,13 @@ async function applyConfiguration() {
     const config = await loadConfig();
     
     // Update page title and message
-    document.title = config.title || document.title;
+    document.title = config.mainTitle || document.title;
     
     const titleElement = document.querySelector('h1');
-    if (titleElement) titleElement.textContent = config.title || titleElement.textContent;
+    if (titleElement) titleElement.textContent = config.mainTitle || titleElement.textContent;
     
     const messageElement = document.querySelector('.message');
-    if (messageElement) messageElement.textContent = config.message || messageElement.textContent;
+    if (messageElement) messageElement.textContent = config.mainMessage || messageElement.textContent;
     
     // Update password hint and password
     const passwordHintElement = document.querySelector('.password-hint');
@@ -49,7 +51,7 @@ async function applyConfiguration() {
     
     // Update modal title
     const passwordTitleElement = document.querySelector('.password-title');
-    if (passwordTitleElement) passwordTitleElement.textContent = config.title || passwordTitleElement.textContent;
+    if (passwordTitleElement) passwordTitleElement.textContent = config.mainTitle || passwordTitleElement.textContent;
     
     // Update colors using CSS variables
     const root = document.documentElement;
@@ -61,6 +63,9 @@ async function applyConfiguration() {
         // Update shadow rules with the primary color
         updateShadowRules(config.colors.primary);
     }
+
+    // Apply background image
+    applyBackgroundImage(config);
     
     // Update heart color
     updateHeartSVG(config.heartColor || config.colors.primary || "#FF1493");
@@ -88,6 +93,23 @@ function updateShadowRules(primaryColor) {
         }
     `;
     document.head.appendChild(shadowStyle);
+}
+
+// Function to apply background image
+function applyBackgroundImage(config) {
+    // Check if background image is specified in config
+    if (config.backgroundImage) {
+        document.body.style.backgroundImage = `url('${config.backgroundImage}')`;
+    } else {
+        // Use default background if not specified
+        document.body.style.backgroundImage = "url('images/background.jpg')";
+    }
+    
+    // Apply additional background properties
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundAttachment = "fixed";
 }
 
 // Function to update heart SVG color

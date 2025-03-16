@@ -21,8 +21,10 @@ async function loadConfig() {
         console.error('Error loading configuration:', error);
         // Return default config as fallback
         return {
-            title: "Our Photo Gallery",
-            message: "Enjoy our beautiful memories together",
+            mainTitle: "Our Photo Gallery",
+            mainMessage: "Enjoy our beautiful memories together",
+            desTitle: "Our Photo Gallery",
+            desMessage: "Enjoy our beautiful memories together",
             colors: {
                 primary: "#FF1493",
                 primaryLight: "#FF69B4",
@@ -43,13 +45,13 @@ async function applyConfiguration() {
     const config = await loadConfig();
     
     // Update page title and message
-    document.title = config.title || document.title;
+    document.title = config.desTitle || document.title;
     
     const titleElement = document.getElementById('gallery-title');
-    if (titleElement) titleElement.textContent = config.title || titleElement.textContent;
+    if (titleElement) titleElement.textContent = config.desTitle || titleElement.textContent;
     
     const messageElement = document.getElementById('gallery-message');
-    if (messageElement) messageElement.textContent = config.message || messageElement.textContent;
+    if (messageElement) messageElement.textContent = config.desMessage || messageElement.textContent;
     
     // Update colors using CSS variables
     const root = document.documentElement;
@@ -62,10 +64,30 @@ async function applyConfiguration() {
         updateShadowRules(config.colors.primary);
     }
     
+    // Apply background image
+    applyBackgroundImage(config);
+
     // Update heart color
     updateHeartSVG(config.heartColor || "#FF1493");
     
     return config;
+}
+
+// Function to apply background image
+function applyBackgroundImage(config) {
+    // Check if background image is specified in config
+    if (config.backgroundImage) {
+        document.body.style.backgroundImage = `url('${config.backgroundImage}')`;
+    } else {
+        // Use default background if not specified
+        document.body.style.backgroundImage = "url('images/background.jpg')";
+    }
+    
+    // Apply additional background properties
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundAttachment = "fixed";
 }
 
 // Function to update heart SVG color
