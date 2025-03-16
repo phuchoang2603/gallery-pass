@@ -128,6 +128,11 @@ async function createImageGallery() {
         
         img.alt = `Memory ${i}`;
         
+        // Add click event for lightbox
+        img.addEventListener('click', function() {
+            openLightbox(this.src, `Moment ${i}`);
+        });
+        
         // Create caption
         const caption = document.createElement('div');
         caption.classList.add('image-caption');
@@ -143,6 +148,170 @@ async function createImageGallery() {
         // Add to grid
         galleryGrid.appendChild(imageCard);
     }
+}
+
+// Create lightbox elements
+function createLightboxElements() {
+    // Create lightbox container
+    const lightbox = document.createElement('div');
+    lightbox.id = 'lightbox';
+    lightbox.classList.add('lightbox');
+    
+    // Create lightbox content
+    const lightboxContent = document.createElement('div');
+    lightboxContent.classList.add('lightbox-content');
+    
+    // Close button
+    const closeBtn = document.createElement('span');
+    closeBtn.classList.add('lightbox-close');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.addEventListener('click', closeLightbox);
+    
+    // Image
+    const lightboxImg = document.createElement('img');
+    lightboxImg.id = 'lightbox-img';
+    lightboxImg.classList.add('lightbox-img');
+    
+    // Caption
+    const lightboxCaption = document.createElement('div');
+    lightboxCaption.id = 'lightbox-caption';
+    lightboxCaption.classList.add('lightbox-caption');
+    
+    // Append elements
+    lightboxContent.appendChild(closeBtn);
+    lightboxContent.appendChild(lightboxImg);
+    lightboxContent.appendChild(lightboxCaption);
+    lightbox.appendChild(lightboxContent);
+    
+    // Add lightbox to body
+    document.body.appendChild(lightbox);
+    
+    // Close lightbox when clicking outside the image
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeLightbox();
+        }
+    });
+    
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+    
+    // Add lightbox styles
+    const lightboxStyle = document.createElement('style');
+    lightboxStyle.textContent = `
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            margin: auto;
+            padding: 0;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-img {
+            display: block;
+            max-width: 100%;
+            max-height: 80vh;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            border-radius: 4px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .lightbox-close:hover {
+            color: var(--primary);
+        }
+        
+        .lightbox-caption {
+            text-align: center;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        
+        .image-card img {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .image-card img:hover {
+            transform: scale(1.03);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.9); }
+            to { transform: scale(1); }
+        }
+        
+        .lightbox-img {
+            animation: zoomIn 0.3s ease;
+        }
+    `;
+    document.head.appendChild(lightboxStyle);
+}
+
+// Function to open the lightbox
+function openLightbox(imgSrc, caption) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    
+    lightboxImg.src = imgSrc;
+    lightboxCaption.textContent = caption;
+    
+    // Show lightbox
+    lightbox.classList.add('active');
+    
+    // Prevent body scrolling
+    document.body.style.overflow = 'hidden';
+}
+
+// Function to close the lightbox
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
+    
+    // Re-enable body scrolling
+    document.body.style.overflow = '';
 }
 
 // Tạo hiệu ứng trái tim bay
@@ -213,6 +382,7 @@ document.head.appendChild(style);
 // Initialize everything when page loads
 window.onload = async function() {
     await applyConfiguration();
+    createLightboxElements(); // Create lightbox elements before gallery
     await createImageGallery();
     createHearts();
     
