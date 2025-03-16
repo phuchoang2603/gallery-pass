@@ -11,10 +11,10 @@
         "bgLight": "#4aaab6"
     },
     "imagesPath": "images/",
-    "imageExtension": ".jpg",
+    "imageExtension": ".JPG",
     "defaultImageCount": 7  ,
     "heartColor": "#00337c",
     "passwordHint": "Enter the password to view the gallery",
     "correctPassword": "2508",
-    "backgroundImage": "images/background.jpg"
+    "backgroundImage": "images/background.JPG"
 }
