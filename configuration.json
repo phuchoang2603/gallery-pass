@@ -2,9 +2,8 @@
     "title": "Our Photo Gallery",
     "message": "Enjoy our beautiful memories together",
     "colors": {
-        "primary": "#FF1493",
-        "primaryLight": "#FF69B4",
-        "primaryDark": "#C71585",
+        "primary": "#00337c",
+        "primaryLight": "#4aaab6",
         "textDark": "#333",
         "textLight": "white",
         "bgLight": "#f8f8f8"
@@ -12,7 +11,7 @@
     "imagesPath": "images/",
     "imageExtension": ".jpg",
     "defaultImageCount": 7  ,
-    "heartColor": "#FF1493",
+    "heartColor": "#00337c",
     "passwordHint": "Enter the password to view the gallery",
-    "correctPassword": "22"
+    "correctPassword": "2508"
 }
