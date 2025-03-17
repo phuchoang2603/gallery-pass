@@ -27,6 +27,7 @@ async function loadConfig() {
             defaultImageCount: 7,
             heartColor: "#FF1493",
             passwordHint: "Enter the password",
+            errorMessage: "Incorrect password. Please try again.",
             correctPassword: "22"
         };
     }
@@ -48,6 +49,10 @@ async function applyConfiguration() {
     // Update password hint and password
     const passwordHintElement = document.querySelector('.password-hint');
     if (passwordHintElement) passwordHintElement.textContent = config.passwordHint || passwordHintElement.textContent;
+
+    // Update error message
+    const errorMessageElement = document.querySelector('.error-message');
+    if (errorMessageElement) errorMessageElement.textContent = config.errorMessage || errorMessageElement.textContent;
     
     // Update modal title
     const passwordTitleElement = document.querySelector('.password-title');

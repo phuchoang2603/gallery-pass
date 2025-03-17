@@ -15,6 +15,7 @@
     "defaultImageCount": 4  ,
     "heartColor": "#00337c",
     "passwordHint": "Enter the password to view the gallery",
+    "errorMessage": "Incorrect password",
     "correctPassword": "2508",
     "backgroundImage": "images/background.JPG"
 }
